@@ -1,60 +1,162 @@
-```html
 <!DOCTYPE html>
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Quiz - Verbes irréguliers</title>
-
+<title>Portail - Révisions Français & Anglais</title>
 <style>
+/* ====================================================
+   STYLES GLOBAUX & ACCUEIL
+==================================================== */
+*{box-sizing:border-box}
 body{
-    font-family:Arial,sans-serif;
-    background:#f2f2f2;
     margin:0;
-    padding:18px
+    padding:15px;
+    font-family:Arial,sans-serif;
+    background:linear-gradient(135deg,#667eea,#764ba2);
+    min-height:100vh;
+    color:#222;
 }
 
-.box{
-    max-width:700px;
+.main-container{
+    max-width:1100px;
     margin:auto;
     background:#fff;
-    padding:22px;
-    border-radius:18px;
-    box-shadow:0 3px 12px #bbb
+    border-radius:22px;
+    padding:20px;
+    box-shadow:0 10px 35px rgba(0,0,0,.25)
 }
 
-h1,h2{
-    text-align:center
+.home-card{
+    text-align:center;
+    padding:40px 20px;
+}
+.home-card h1{
+    color:#4b3f72;
+    margin-bottom:10px;
+    font-size:32px;
+}
+.home-card p{
+    color:#666;
+    font-size:18px;
+    margin-bottom:30px;
+}
+.home-buttons{
+    display:flex;
+    flex-direction:column;
+    gap:15px;
+    max-width:450px;
+    margin:0 auto;
+}
+.home-btn{
+    background:#4b6cff;
+    color:#fff;
+    font-size:18px;
+    padding:18px;
+    border:0;
+    border-radius:14px;
+    cursor:pointer;
+    font-weight:bold;
+    box-shadow:0 4px 15px rgba(75,108,255,0.3);
+    transition:transform 0.2s, background 0.2s;
+}
+.home-btn:hover{
+    background:#3a58e0;
+    transform:translateY(-2px);
+}
+.home-btn.grammar{
+    background:#764ba2;
+    box-shadow:0 4px 15px rgba(118,75,162,0.3);
+}
+.home-btn.grammar:hover{
+    background:#633a8e;
 }
 
-button{
+.hidden{display:none !important;}
+
+.back-home-bar{
+    margin-bottom:15px;
+}
+.back-home-btn{
+    background:#ddd;
+    color:#333;
+    width:auto;
+    padding:10px 16px;
+    font-size:14px;
+    border-radius:10px;
+    border:0;
+    cursor:pointer;
+    font-weight:bold;
+}
+.back-home-btn:hover{background:#ccc;}
+
+
+/* ====================================================
+   STYLES DU MODULE: CLASSES GRAMMATICALES
+==================================================== */
+#grammarSection h1{text-align:center;color:#4b3f72;margin:4px 0 7px}
+.subtitle{text-align:center;color:#666;margin-bottom:18px}
+.nav{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-bottom:18px}
+.nav button{background:#4b6cff;color:#fff}
+.nav button.active{background:#28a745}
+.page{display:none}.page.active{display:block}
+.top{display:flex;justify-content:center;align-items:center;gap:12px;flex-wrap:wrap}
+#grammarSection select{font-size:15px;padding:9px;border:1px solid #aaa;border-radius:9px;background:white}
+.grammar-score{background:#f0f2f8;border-radius:12px;padding:10px 15px;font-weight:bold}
+.phrase{margin:20px 0;background:#f3f4f8;border-radius:16px;padding:22px;text-align:center;font-size:27px;font-weight:bold;line-height:1.8}
+.word{display:inline-block;margin:3px;padding:3px 7px;border-radius:8px}
+.word.good{background:#c9f2d1}.word.half{background:#ffe7a3}.word.bad{background:#ffcaca}
+.questions{display:grid;grid-template-columns:repeat(auto-fit,minmax(285px,1fr));gap:12px}
+.card{border:1px solid #ddd;border-radius:13px;padding:13px;background:#fff}
+.card strong{display:block;font-size:18px;margin-bottom:8px}
+.card select{width:100%;margin-bottom:8px}
+.precision{display:none}.precision.show{display:block}
+.buttons{display:flex;justify-content:center;flex-wrap:wrap;gap:10px;margin-top:24px}
+#grammarSection button{border:0;border-radius:10px;padding:12px 18px;font-size:16px;font-weight:bold;cursor:pointer}
+#grammarSection button:hover{opacity:.88}
+#correct{background:#28a745;color:#fff}#new{background:#4169e1;color:#fff}#reset{background:#555;color:#fff}
+.result{text-align:center;font-size:21px;font-weight:bold;margin-top:20px}
+.details{display:none;margin-top:20px;background:#fff8df;padding:18px;border-radius:14px}
+.correction{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:9px}
+.correction-item{background:white;padding:10px;border-radius:9px}
+.study{background:#f7f8fc;border-radius:16px;padding:18px}
+.study h2{color:#4b3f72;margin-top:4px}
+.study-intro{background:#fff8df;padding:13px;border-radius:12px}
+.category{background:#fff;border:1px solid #ddd;border-radius:14px;padding:15px;margin:12px 0}
+.category h3{margin:0 0 8px;color:#4b3f72}
+.category p{margin:6px 0;line-height:1.5}
+.badge{display:inline-block;background:#eef0ff;padding:5px 9px;border-radius:8px;margin:3px;font-size:14px}
+.example{background:#f1f3f8;border-left:4px solid #667eea;padding:10px;margin-top:9px;border-radius:8px}
+.tip{background:#eaf7ee;padding:12px;border-radius:10px;margin-top:12px}
+.help{text-align:center;color:#777;font-size:13px;margin-top:18px}
+
+
+/* ====================================================
+   STYLES DU MODULE: VERBES IRRÉGULIERS (ANGLAIS)
+==================================================== */
+#englishQuizContainer h1, #englishQuizContainer h2{text-align:center}
+#englishQuizContainer button{
     width:100%;
     padding:14px;
     margin-top:10px;
     font-size:17px;
     border:0;
     border-radius:9px;
-    cursor:pointer
+    cursor:pointer;
 }
-
 .groupGrid{
     display:grid;
     grid-template-columns:1fr 1fr;
     gap:10px
 }
-
-.groupBtn{
-    background:#e9eef7
-}
-
+.groupBtn{background:#e9eef7}
 .verbe{
     font-size:27px;
     font-weight:bold;
     text-align:center;
     margin:22px 0
 }
-
-input{
+#englishQuizContainer input{
     width:100%;
     box-sizing:border-box;
     padding:13px;
@@ -63,144 +165,488 @@ input{
     border:1px solid #bbb;
     border-radius:8px
 }
-
-.score{
+.score-anglais{
     text-align:center;
     font-size:19px;
     margin:12px 0
 }
-
 #correction{
     margin-top:14px;
     line-height:1.7
 }
-
-.hidden{
-    display:none
-}
-
 .small{
     text-align:center;
     color:#666
 }
-
-/* Liste des verbes */
 .table-container{
     overflow-x:auto;
     margin-top:20px
 }
-
 table{
     width:100%;
     border-collapse:collapse;
     font-size:15px
 }
-
 th,td{
     border:1px solid #ccc;
     padding:10px 7px;
     text-align:center
 }
-
-th{
-    background:#e9eef7
-}
-
-tr:nth-child(even){
-    background:#f8f8f8
-}
-
+th{background:#e9eef7}
+tr:nth-child(even){background:#f8f8f8}
 .groupTitle{
     margin-top:25px;
     padding:10px;
     background:#e9eef7;
     border-radius:8px
 }
+.backBtn{background:#ddd}
 
-.backBtn{
-    background:#ddd
+@media(max-width:600px){
+    .main-container{padding:13px}
+    .phrase{font-size:21px}
+    .questions{grid-template-columns:1fr}
 }
 </style>
 </head>
-
 <body>
 
-<div class="box">
+<div class="main-container">
 
-<h1>📚 Verbes irréguliers</h1>
-
-<!-- MENU -->
-<div id="menu">
-
-<p class="small">Choisis le groupe à réviser :</p>
-
-<div class="groupGrid">
-<button class="groupBtn" onclick="start(1)">Groupe 1</button>
-<button class="groupBtn" onclick="start(2)">Groupe 2</button>
-<button class="groupBtn" onclick="start(3)">Groupe 3</button>
-<button class="groupBtn" onclick="start(4)">Groupe 4</button>
-<button class="groupBtn" onclick="start(5)">Groupe 5</button>
-</div>
-
-<button onclick="start(0)">🔥 Tous les groupes</button>
-
-<button onclick="showList()">📖 Voir la liste des verbes</button>
-
-</div>
+    <!-- ====================================================
+         ACCUEIL PRINCIPAL (CHOIX DES MODULES)
+    ==================================================== -->
+    <div id="homeMenu" class="home-card">
+        <h1>🚀 Portail de Révisions</h1>
+        <p>Choisis ton activité pour commencer :</p>
+        <div class="home-buttons">
+            <button class="home-btn" onclick="openModule('english')">🇬🇧 Quiz Anglais (Verbes irréguliers)</button>
+            <button class="home-btn grammar" onclick="openModule('grammar')">📖 Classes grammaticales</button>
+        </div>
+    </div>
 
 
-<!-- QUIZ -->
-<div id="quiz" class="hidden">
+    <!-- ====================================================
+          MODULE 1 : CLASSES GRAMMATICALES
+    ==================================================== -->
+    <div id="grammarSection" class="hidden">
+        <div class="back-home-bar">
+            <button class="back-home-btn" onclick="goHome()">⬅️ Retour au menu principal</button>
+        </div>
 
-<div class="score" id="progress"></div>
+        <h1>📚 Classes grammaticales</h1>
+        <div class="subtitle">Apprends ta fiche puis entraîne-toi avec des phrases aléatoires.</div>
 
-<div class="verbe" id="french"></div>
+        <div class="nav">
+        <button id="btnFiche" class="active" onclick="showPage('fiche')">📖 Fiche pour apprendre</button>
+        <button id="btnQuiz" onclick="showPage('quiz')">🎯 Quiz</button>
+        </div>
 
-<input id="a1" placeholder="1. Infinitif">
-<input id="a2" placeholder="2. Prétérit">
-<input id="a3" placeholder="3. Participe passé">
+        <!-- FICHE -->
+        <section id="fiche" class="page active">
+        <div class="study">
+        <div class="study-intro">
+        <b>🧠 À retenir :</b> une classe grammaticale est la catégorie d'un mot.
+        Dans le quiz, tu dois trouver la classe puis, quand elle existe, le sous-type.
+        </div>
 
-<button id="check" onclick="checkAnswer()">Vérifier</button>
+        <div class="category">
+        <h3>🟦 Les déterminants</h3>
+        <p>Ils accompagnent généralement un nom.</p>
+        <p>
+        <span class="badge">article défini : le, la, les, l'</span>
+        <span class="badge">article indéfini : un, une, des</span>
+        <span class="badge">possessif : mon, ma, mes...</span>
+        <span class="badge">démonstratif : ce, cet, cette, ces</span>
+        <span class="badge">indéfini : chaque, plusieurs, quelques...</span>
+        <span class="badge">numéral : deux, trois, quatre...</span>
+        </p>
+        <div class="example"><b>Exemple :</b> <u>Les</u> petits chiens → « Les » = déterminant, article défini.</div>
+        </div>
 
-<div id="correction"></div>
+        <div class="category">
+        <h3>🟩 Les noms</h3>
+        <p>Ils servent notamment à désigner une personne, un animal, une chose, un lieu ou une idée.</p>
+        <p>
+        <span class="badge">nom commun</span>
+        <span class="badge">nom propre</span>
+        </p>
+        <div class="example"><b>Exemples :</b> <u>chat</u> = nom commun ; <u>Marie</u> = nom propre.</div>
+        </div>
 
-</div>
+        <div class="category">
+        <h3>🟨 Les adjectifs</h3>
+        <p>L'adjectif qualificatif donne une information sur un nom.</p>
+        <p><span class="badge">adjectif qualificatif</span></p>
+        <div class="example"><b>Exemple :</b> un chien <u>rapide</u> → « rapide » = adjectif qualificatif.</div>
+        </div>
+
+        <div class="category">
+        <h3>🟪 Les pronoms</h3>
+        <p>Ils peuvent remplacer un nom ou un groupe nominal.</p>
+        <p>
+        <span class="badge">personnel : je, tu, il, nous...</span>
+        <span class="badge">possessif</span>
+        <span class="badge">démonstratif : celui, celle...</span>
+        <span class="badge">relatif : qui, que, dont, où...</span>
+        <span class="badge">indéfini : quelqu'un, personne, chacun...</span>
+        </p>
+        <div class="example"><b>Exemple :</b> <u>Il</u> court. → « Il » = pronom personnel.</div>
+        </div>
+
+        <div class="category">
+        <h3>🟥 Les verbes</h3>
+        <p>Ils expriment généralement une action ou un état et peuvent être conjugués.</p>
+        <p><span class="badge">verbe</span></p>
+        <div class="example"><b>Exemple :</b> Le garçon <u>court</u> → « court » = verbe.</div>
+        </div>
+
+        <div class="category">
+        <h3>🟧 Les adverbes</h3>
+        <p>Ils apportent une précision, par exemple sur un verbe, un adjectif ou un autre adverbe.</p>
+        <p><span class="badge">adverbe</span></p>
+        <div class="example"><b>Exemple :</b> Il court <u>rapidement</u> → « rapidement » = adverbe.</div>
+        </div>
+
+        <div class="category">
+        <h3>⬛ Les prépositions</h3>
+        <p>Elles introduisent notamment un complément.</p>
+        <p>
+        <span class="badge">à</span><span class="badge">dans</span><span class="badge">sur</span>
+        <span class="badge">sous</span><span class="badge">avec</span><span class="badge">sans</span>
+        <span class="badge">pour</span><span class="badge">par</span><span class="badge">chez</span>
+        <span class="badge">vers</span><span class="badge">entre</span>
+        <span class="badge">devant</span><span class="badge">derrière</span>
+        </p>
+        <div class="example"><b>Exemple :</b> Il va <u>dans</u> la maison. → « dans » = préposition.</div>
+        </div>
+
+        <div class="category">
+        <h3>🔵 Les conjonctions</h3>
+        <p>Elles servent notamment à relier des mots, groupes de mots ou propositions.</p>
+        <p>
+        <span class="badge">coordination : mais, ou, et, donc, or, ni, car</span>
+        <span class="badge">subordination : quand, lorsque, parce que, si...</span>
+        </p>
+        <div class="example"><b>Exemples :</b> « et » = conjonction de coordination ; « quand » = conjonction de subordination.</div>
+        </div>
+
+        <div class="category">
+        <h3>💬 Les interjections</h3>
+        <p>Elles expriment une émotion, une réaction ou une exclamation.</p>
+        <p><span class="badge">Oh !</span><span class="badge">Ah !</span><span class="badge">Zut !</span><span class="badge">Hélas !</span><span class="badge">Bravo !</span></p>
+        <div class="example"><b>Exemple :</b> <u>Oh</u> ! Quelle surprise ! → « Oh » = interjection.</div>
+        </div>
+
+        <div class="tip">
+        <b>⭐ Astuce pour le quiz :</b> commence toujours par chercher la classe générale.
+        Si tu trouves « déterminant », regarde ensuite quel type de déterminant c'est.
+        C'est exactement ce qui permet d'obtenir le point entier.
+        </div>
+
+        <br>
+        <button onclick="showPage('quiz')" style="background:#28a745;color:white;width:100%">🎯 J'ai appris, commencer le quiz</button>
+        </div>
+        </section>
+
+        <!-- QUIZ -->
+        <section id="quiz" class="page">
+        <div class="top">
+        <label>Niveau :
+        <select id="level">
+        <option value="facile">Facile</option>
+        <option value="moyen">Moyen</option>
+        <option value="difficile">Difficile</option>
+        <option value="tous" selected>Tous</option>
+        </select>
+        </label>
+        <div class="grammar-score">Score : <span id="score">0</span> / <span id="possible">0</span></div>
+        </div>
+
+        <div id="phrase" class="phrase"></div>
+        <div id="questions" class="questions"></div>
+
+        <div class="buttons">
+        <button id="correct" onclick="corriger()">✅ Corriger</button>
+        <button id="new" onclick="nouvellePhrase()">🔄 Nouvelle phrase</button>
+        <button id="reset" onclick="resetScore()">♻️ Réinitialiser le score</button>
+        </div>
+
+        <div id="result" class="result"></div>
+
+        <div id="details" class="details">
+        <h2>📖 Correction détaillée</h2>
+        <p>🟢 Classe + sous-type corrects = <b>1 point</b><br>
+        🟡 Classe correcte mais sous-type incorrect = <b>0,5 point</b><br>
+        🔴 Classe incorrecte = <b>0 point</b></p>
+        <div id="correction" class="correction"></div>
+        </div>
+        </section>
+    </div>
 
 
-<!-- FIN -->
-<div id="end" class="hidden">
+    <!-- ====================================================
+         MODULE 2 : QUIZ ANGLAIS (VERBES IRRÉGULIERS)
+    ==================================================== -->
+    <div id="englishQuizContainer" class="hidden">
+        <div class="back-home-bar">
+            <button class="back-home-btn" onclick="goHome()">⬅️ Retour au menu principal</button>
+        </div>
 
-<h2>🏆 Terminé !</h2>
+        <h1>📚 Verbes irréguliers</h1>
 
-<div class="score" id="finalScore"></div>
+        <!-- MENU -->
+        <div id="menu">
+            <p class="small">Choisis le groupe à réviser :</p>
+            <div class="groupGrid">
+                <button class="groupBtn" onclick="start(1)">Groupe 1</button>
+                <button class="groupBtn" onclick="start(2)">Groupe 2</button>
+                <button class="groupBtn" onclick="start(3)">Groupe 3</button>
+                <button class="groupBtn" onclick="start(4)">Groupe 4</button>
+                <button class="groupBtn" onclick="start(5)">Groupe 5</button>
+            </div>
+            <button onclick="start(0)">🔥 Tous les groupes</button>
+            <button onclick="showList()">📖 Voir la liste des verbes</button>
+        </div>
 
-<button onclick="backMenu()">Choisir un autre groupe</button>
+        <!-- QUIZ -->
+        <div id="quiz-anglais" class="hidden">
+            <div class="score-anglais" id="progress"></div>
+            <div class="verbe" id="french"></div>
+            <input id="a1" placeholder="1. Infinitif">
+            <input id="a2" placeholder="2. Prétérit">
+            <input id="a3" placeholder="3. Participe passé">
+            <button id="check" onclick="checkAnswer()">Vérifier</button>
+            <div id="correction-anglais"></div>
+        </div>
 
-<button onclick="restart()">Recommencer ce groupe</button>
+        <!-- FIN -->
+        <div id="end" class="hidden">
+            <h2>🏆 Terminé !</h2>
+            <div class="score-anglais" id="finalScore"></div>
+            <button onclick="backMenu()">Choisir un autre groupe</button>
+            <button onclick="restart()">Recommencer ce groupe</button>
+        </div>
 
-</div>
-
-
-<!-- LISTE -->
-<div id="list" class="hidden">
-
-<h2>📖 Liste des verbes irréguliers</h2>
-
-<div id="verbTables"></div>
-
-<button class="backBtn" onclick="backMenuFromList()">
-⬅️ Retour au menu
-</button>
-
-</div>
+        <!-- LISTE -->
+        <div id="list" class="hidden">
+            <h2>📖 Liste des verbes irréguliers</h2>
+            <div id="verbTables"></div>
+            <button class="backBtn" onclick="backMenuFromList()">⬅️ Retour au menu</button>
+        </div>
+    </div>
 
 </div>
 
 
 <script>
+/* ====================================================
+   GESTION DU MENU PRINCIPAL ET DES MODULES
+==================================================== */
+function openModule(moduleName) {
+    document.getElementById("homeMenu").classList.add("hidden");
+    if (moduleName === 'english') {
+        document.getElementById("englishQuizContainer").classList.remove("hidden");
+    } else if (moduleName === 'grammar') {
+        document.getElementById("grammarSection").classList.remove("hidden");
+        if (!phraseActuelle) nouvellePhrase();
+    }
+}
 
+function goHome() {
+    document.getElementById("englishQuizContainer").classList.add("hidden");
+    document.getElementById("grammarSection").classList.add("hidden");
+    document.getElementById("homeMenu").classList.remove("hidden");
+    
+    // Réinitialiser les sous-vues de l'anglais
+    document.getElementById("quiz-anglais").classList.add("hidden");
+    document.getElementById("end").classList.add("hidden");
+    document.getElementById("list").classList.add("hidden");
+    document.getElementById("menu").classList.remove("hidden");
+}
+
+
+/* ====================================================
+   LOGIQUE : CLASSES GRAMMATICALES
+==================================================== */
+const classes=[
+"Déterminant","Nom","Adjectif","Pronom","Verbe",
+"Adverbe","Préposition","Conjonction","Interjection"
+];
+
+const types={
+"Déterminant":["article défini","article indéfini","déterminant possessif","déterminant démonstratif","déterminant indéfini","déterminant numéral"],
+"Nom":["nom commun","nom propre"],
+"Adjectif":["adjectif qualificatif"],
+"Pronom":["pronom personnel","pronom possessif","pronom démonstratif","pronom relatif","pronom indéfini"],
+"Verbe":["verbe"],
+"Adverbe":["adverbe"],
+"Préposition":["préposition"],
+"Conjonction":["conjonction de coordination","conjonction de subordination"],
+"Interjection":["interjection"]
+};
+
+const V={
+noms:["chat","chien","garçon","fille","livre","professeur","voisin","jardin","maison","école","village","vélo","sac","film","gâteau","arbre","oiseau","journal","musée","match","chemin","ordinateur","cahier","montagne","rivière","forêt","plage","train","magasin","musicien","médecin","voyageur","restaurant","chocolat","problème","question","réponse","histoire","idée","projet","message","photo","ballon","parc","gare","voiture","fenêtre","porte","classe","fleur","cartable","bateau","route","maître","élève","chanson","pays","ville","cheval"],
+prenoms:["Paul","Marie","Lina","Lucas","Sophie","Thomas","Emma","Léa","Hugo","Nina","Arthur","Jules"],
+adj:["petit","grand","jeune","vieux","nouveau","ancien","rapide","lent","bruyant","calme","joyeux","curieux","amusant","sérieux","courageux","fatigué","heureux","triste","magnifique","immense","minuscule","étrange","intéressant","délicieux","froid","chaud","vert","bleu","rouge","brillant","silencieux","propre","sale","important","difficile","facile","joli","long"],
+verbs:["mange","regarde","observe","écoute","dessine","lit","écrit","joue","court","marche","avance","arrive","part","cherche","trouve","prépare","répare","visite","adore","déteste","porte","ouvre","ferme","range","nettoie","apprend","comprend","répond","travaille","chante","danse","grimpe","construit","choisit","termine","commence","attend","entend","admire"],
+adv:["rapidement","lentement","souvent","toujours","parfois","jamais","beaucoup","peu","très","vraiment","doucement","bruyamment","heureusement","malheureusement","demain","hier","ici","ailleurs","déjà","encore","bientôt","maintenant","facilement"],
+prep:["à","dans","sur","sous","avec","sans","pour","par","chez","vers","entre","devant","derrière"],
+coord:["mais","ou","et","donc","or","ni","car"],
+sub:["parce que","quand","lorsque","puisque","si","comme","bien que","alors que"],
+pronPers:["je","tu","il","elle","nous","vous","ils","elles","on","me","te","se","lui","leur"],
+pronIndef:["quelqu'un","personne","chacun","plusieurs","rien"],
+pronDem:["celui","celle","ceux","celles"],
+pronRel:["qui","que","dont","où"]
+};
+
+function pick(a){return a[Math.floor(Math.random()*a.length)]}
+function M(text,classe,type){return{text,classe,type}}
+function nomCommun(){return M(pick(V.noms),"Nom","nom commun")}
+function nomPropre(){return M(pick(V.prenoms),"Nom","nom propre")}
+function adj(){return M(pick(V.adj),"Adjectif","adjectif qualificatif")}
+function verbe(){return M(pick(V.verbs),"Verbe","verbe")}
+function adv(){return M(pick(V.adv),"Adverbe","adverbe")}
+function prep(){return M(pick(V.prep),"Préposition","préposition")}
+
+function detNom(kind){
+let n=nomCommun();
+if(kind==="def"){
+let a=["école","idée","histoire","oiseau"].includes(n.text)?"l'":pick(["le","la","les"]);
+return[M(a,"Déterminant","article défini"),n];
+}
+if(kind==="indef")return[M(pick(["un","une","des"]),"Déterminant","article indéfini"),n];
+if(kind==="poss")return[M(pick(["mon","ma","mes","ton","ta","tes","son","sa","ses","notre","nos","votre","vos","leur","leurs"]),"Déterminant","déterminant possessif"),n];
+if(kind==="dem")return[M(pick(["ce","cet","cette","ces"]),"Déterminant","déterminant démonstratif"),n];
+if(kind==="indefini")return[M(pick(["chaque","plusieurs","certains","certaines","quelques"]),"Déterminant","déterminant indéfini"),n];
+return[M(pick(["deux","trois","quatre","cinq","six"]),"Déterminant","déterminant numéral"),n];
+}
+
+function facile(){
+let g=detNom(pick(["def","indef","poss","dem"]));
+return[g[0],adj(),g[1],verbe(),adv()];
+}
+function moyen(){
+let s=detNom(pick(["def","indef","poss","dem","indefini","num"]));
+let o=detNom(pick(["def","indef","poss","dem"]));
+return[s[0],s[1],verbe(),prep(),o[0],adj(),o[1],adv()];
+}
+function difficile(){
+let s=nomPropre(),g=detNom(pick(["def","indef","poss","dem"])),o=detNom(pick(["def","indef","dem"]));
+let c=Math.random()<.5?M(pick(V.coord),"Conjonction","conjonction de coordination"):M(pick(V.sub),"Conjonction","conjonction de subordination");
+return[s,verbe(),g[0],adj(),g[1],adv(),c,o[0],o[1],verbe()];
+}
+function speciale(){
+const P=[
+[M("Oh","Interjection","interjection"),M("le","Déterminant","article défini"),adj(),nomCommun(),verbe(),adv(),prep(),M("la","Déterminant","article défini"),nomCommun()],
+[nomPropre(),verbe(),M("son","Déterminant","déterminant possessif"),adj(),nomCommun(),M("et","Conjonction","conjonction de coordination"),verbe(),adv()],
+[M("Chaque","Déterminant","déterminant indéfini"),nomCommun(),verbe(),adv(),M("car","Conjonction","conjonction de coordination"),M("il","Pronom","pronom personnel"),verbe()],
+[M("Quand","Conjonction","conjonction de subordination"),M("la","Déterminant","article défini"),nomCommun(),verbe(),M("nous","Pronom","pronom personnel"),verbe(),prep(),M("la","Déterminant","article défini"),nomCommun()],
+[M("Ils","Pronom","pronom personnel"),verbe(),M("ces","Déterminant","déterminant démonstratif"),adj(),nomCommun(),prep(),M("le","Déterminant","article défini"),nomCommun()],
+[nomPropre(),verbe(),M("une","Déterminant","article indéfini"),adj(),nomCommun(),prep(),M("son","Déterminant","déterminant possessif"),nomCommun()],
+[M("Hélas","Interjection","interjection"),M("mon","Déterminant","déterminant possessif"),adj(),nomCommun(),verbe(),prep(),M("le","Déterminant","article défini"),nomCommun()],
+[M("Nous","Pronom","pronom personnel"),verbe(),M("nos","Déterminant","déterminant possessif"),nomCommun(),M("et","Conjonction","conjonction de coordination"),verbe(),M("notre","Déterminant","déterminant possessif"),nomCommun()],
+[M("Celui","Pronom","pronom démonstratif"),verbe(),M("le","Déterminant","article défini"),nomCommun(),prep(),M("la","Déterminant","article défini"),nomCommun()],
+[M("Quelqu'un","Pronom","pronom indéfini"),verbe(),prep(),M("la","Déterminant","article défini"),nomCommun(),adv()],
+[nomPropre(),verbe(),M("celui","Pronom","pronom démonstratif"),M("que","Pronom","pronom relatif"),M("le","Déterminant","article défini"),nomCommun(),verbe()],
+[nomPropre(),verbe(),M("mais","Conjonction","conjonction de coordination"),M("elle","Pronom","pronom personnel"),verbe(),adv()],
+[M("Personne","Pronom","pronom indéfini"),verbe(),prep(),M("la","Déterminant","article défini"),nomCommun()]
+];
+return pick(P);
+}
+
+let phraseActuelle=null,gScore=0,gPossible=0;
+
+function generer(){
+let n=document.getElementById("level").value;
+if(Math.random()<.25)return speciale();
+if(n==="facile")return facile();
+if(n==="moyen")return moyen();
+if(n==="difficile")return difficile();
+return pick([facile,moyen,difficile])();
+}
+
+function nouvellePhrase(){
+phraseActuelle=generer();
+document.getElementById("result").textContent="";
+document.getElementById("details").style.display="none";
+afficher();
+}
+
+function afficher(){
+const p=document.getElementById("phrase"),q=document.getElementById("questions");
+p.innerHTML="";q.innerHTML="";
+phraseActuelle.forEach((m,i)=>{
+let s=document.createElement("span");s.className="word";s.id="word-"+i;s.textContent=m.text;p.appendChild(s);
+if(i<phraseActuelle.length-1)p.appendChild(document.createTextNode(" "));
+});
+phraseActuelle.forEach((m,i)=>{
+let card=document.createElement("div");card.className="card";
+let title=document.createElement("strong");title.textContent=(i+1)+". "+m.text;
+let sc=document.createElement("select");sc.id="classe-"+i;
+let op=document.createElement("option");op.value="";op.textContent="-- Classe grammaticale --";sc.appendChild(op);
+classes.forEach(c=>{let o=document.createElement("option");o.value=c;o.textContent=c;sc.appendChild(o)});
+let st=document.createElement("select");st.id="type-"+i;st.className="precision";
+let ot=document.createElement("option");ot.value="";ot.textContent="-- Précision --";st.appendChild(ot);
+sc.addEventListener("change",()=>{
+st.innerHTML="";
+let x=document.createElement("option");x.value="";x.textContent="-- Précision --";st.appendChild(x);
+if(!sc.value){st.classList.remove("show");return}
+st.classList.add("show");
+(types[sc.value]||[]).forEach(t=>{let o=document.createElement("option");o.value=t;o.textContent=t;st.appendChild(o)});
+});
+card.appendChild(title);card.appendChild(sc);card.appendChild(st);q.appendChild(card);
+});
+}
+
+function corriger(){
+let pts=0,ok=0;
+phraseActuelle.forEach((m,i)=>{
+let c=document.getElementById("classe-"+i).value,t=document.getElementById("type-"+i).value,w=document.getElementById("word-"+i);
+w.classList.remove("good","half","bad");
+if(c===m.classe){ok++;if(t===m.type){pts+=1;w.classList.add("good")}else{pts+=.5;w.classList.add("half")}}
+else w.classList.add("bad");
+});
+gScore+=pts;gPossible+=phraseActuelle.length;
+document.getElementById("score").textContent=gScore.toString().replace(".",",");
+document.getElementById("possible").textContent=gPossible;
+document.getElementById("result").innerHTML="🎯 "+pts.toString().replace(".",",")+" / "+phraseActuelle.length+" points<br>Classes correctes : "+ok+" / "+phraseActuelle.length;
+afficherCorrection();
+}
+
+function afficherCorrection(){
+let box=document.getElementById("correction");box.innerHTML="";
+phraseActuelle.forEach((m,i)=>{
+let c=document.getElementById("classe-"+i).value||"aucune",t=document.getElementById("type-"+i).value||"aucune";
+let pts=c===m.classe?(t===m.type?1:.5):0;
+let d=document.createElement("div");d.className="correction-item";
+d.innerHTML="<b>"+m.text+"</b><br>Ta réponse : "+c+" — "+t+"<br>Correction : <b>"+m.classe+"</b> — "+m.type+"<br>Points : <b>"+pts.toString().replace(".",",")+"</b>";
+box.appendChild(d);
+});
+document.getElementById("details").style.display="block";
+}
+
+function resetScore(){
+gScore=0;gPossible=0;
+document.getElementById("score").textContent="0";
+document.getElementById("possible").textContent="0";
+document.getElementById("result").textContent="";
+}
+
+function showPage(page){
+document.querySelectorAll(".page").forEach(x=>x.classList.remove("active"));
+document.getElementById(page).classList.add("active");
+document.getElementById("btnFiche").classList.toggle("active",page==="fiche");
+document.getElementById("btnQuiz").classList.toggle("active",page==="quiz");
+if(page==="quiz" && !phraseActuelle)nouvellePhrase();
+}
+
+
+/* ====================================================
+   LOGIQUE : QUIZ ANGLAIS (VERBES IRRÉGULIERS)
+==================================================== */
 const groups={
-
 "1":[
 ["être","be","was/were","been"],
 ["supporter","bear","bore","borne"],
@@ -208,6 +654,7 @@ const groups={
 ["devenir","become","became","become"],
 ["commencer","begin","began","begun"],
 ["parier","bet","bet","bet"],
+["saigner","bleed","bled","bled"],
 ["mordre","bite","bit","bitten"],
 ["souffler","blow","blew","blown"],
 ["casser","break","broke","broken"],
@@ -223,12 +670,13 @@ const groups={
 ["faire","do","did","done"],
 ["rêver","dream","dreamt","dreamt"]
 ],
-
 "2":[
 ["boire","drink","drank","drunk"],
+["dessiner","draw","drew","drawn"],
 ["conduire","drive","drove","driven"],
 ["manger","eat","ate","eaten"],
 ["tomber","fall","fell","fallen"],
+["nourrir","feed","fed","fed"],
 ["se sentir / toucher","feel","felt","felt"],
 ["se battre","fight","fought","fought"],
 ["trouver","find","found","found"],
@@ -245,9 +693,9 @@ const groups={
 ["entendre","hear","heard","heard"],
 ["cacher","hide","hid","hidden"],
 ["frapper","hit","hit","hit"],
+["tenir","hold","held","held"],
 ["blesser","hurt","hurt","hurt"]
 ],
-
 "3":[
 ["garder","keep","kept","kept"],
 ["connaître / savoir","know","knew","known"],
@@ -270,7 +718,6 @@ const groups={
 ["vendre","sell","sold","sold"],
 ["envoyer","send","sent","sent"]
 ],
-
 "4":[
 ["secouer / trembler","shake","shook","shaken"],
 ["briller","shine","shone","shone"],
@@ -288,246 +735,136 @@ const groups={
 ["nager","swim","swam","swum"],
 ["prendre","take","took","taken"],
 ["enseigner","teach","taught","taught"],
+["déchirer","tear","tore","torn"],
 ["dire / raconter","tell","told","told"],
 ["penser","think","thought","thought"],
 ["jeter","throw","threw","thrown"],
 ["comprendre","understand","understood","understood"]
 ],
-
 "5":[
 ["réveiller","wake","woke","woken"],
 ["porter (vêtement)","wear","wore","worn"],
 ["gagner","win","won","won"],
 ["écrire","write","wrote","written"]
 ]
-
 };
-
 
 let quiz=[];
 let index=0;
-let score=0;
+let scoreAnglais=0;
 let selectedGroup=0;
-
 
 function shuffle(a){
     return [...a].sort(()=>Math.random()-0.5)
 }
 
-
 function clean(s){
     return s.toLowerCase().trim().replace(/\s+/g,"")
 }
 
-
 function start(g){
-
     selectedGroup=g;
-
     quiz=shuffle(
         g===0
         ? Object.values(groups).flat()
         : groups[g]
     );
-
     index=0;
-    score=0;
+    scoreAnglais=0;
 
     document.getElementById("menu").classList.add("hidden");
     document.getElementById("end").classList.add("hidden");
     document.getElementById("list").classList.add("hidden");
-    document.getElementById("quiz").classList.remove("hidden");
+    document.getElementById("quiz-anglais").classList.remove("hidden");
 
     showQuestion();
 }
 
-
 function showQuestion(){
-
     const v=quiz[index];
-
-    document.getElementById("progress").textContent=
-        "Verbe "+(index+1)+" / "+quiz.length+
-        " — Score : "+score;
-
+    document.getElementById("progress").textContent="Verbe "+(index+1)+" / "+quiz.length+" — Score : "+scoreAnglais;
     document.getElementById("french").textContent=v[0];
 
-    ["a1","a2","a3"].forEach(
-        id=>document.getElementById(id).value=""
-    );
-
-    document.getElementById("correction").innerHTML="";
+    ["a1","a2","a3"].forEach(id=>document.getElementById(id).value="");
+    document.getElementById("correction-anglais").innerHTML="";
 
     const b=document.getElementById("check");
-
     b.textContent="Vérifier";
     b.onclick=checkAnswer;
-
     document.getElementById("a1").focus();
 }
 
-
 function checkAnswer(){
-
     const v=quiz[index];
-
-    const got=[
-        clean(a1.value),
-        clean(a2.value),
-        clean(a3.value)
-    ];
-
-    const expected=[
-        clean(v[1]),
-        clean(v[2]),
-        clean(v[3])
-    ];
+    const got=[clean(a1.value), clean(a2.value), clean(a3.value)];
+    const expected=[clean(v[1]), clean(v[2]), clean(v[3])];
 
     let points=0;
-
     for(let i=0;i<3;i++)
-        if(got[i]===expected[i])
-            points++;
+        if(got[i]===expected[i]) points++;
 
-    score+=points;
+    scoreAnglais+=points;
 
-    document.getElementById("correction").innerHTML=
-        "<b>"+points+" / 3</b><br>"+
-        "Réponse : <b>"+
-        v[1]+" → "+v[2]+" → "+v[3]+
-        "</b>";
+    document.getElementById("correction-anglais").innerHTML=
+        "<b>"+points+" / 3</b><br>Réponse : <b>"+v[1]+" → "+v[2]+" → "+v[3]+"</b>";
 
     const b=document.getElementById("check");
-
-    b.textContent=
-        index===quiz.length-1
-        ? "Voir mon score"
-        : "Verbe suivant";
-
+    b.textContent=(index===quiz.length-1) ? "Voir mon score" : "Verbe suivant";
     b.onclick=nextQuestion;
 }
 
-
 function nextQuestion(){
-
     index++;
-
     if(index>=quiz.length){
-
-        document.getElementById("quiz").classList.add("hidden");
+        document.getElementById("quiz-anglais").classList.add("hidden");
         document.getElementById("end").classList.remove("hidden");
-
         const total=quiz.length*3;
-
-        let msg=
-            score===total
-            ? "🔥 PARFAIT !"
-            : score>=total*.8
-            ? "👏 Excellent !"
-            : score>=total*.6
-            ? "👍 Bien joué !"
-            : "💪 Continue à réviser !";
-
-        document.getElementById("finalScore").innerHTML=
-            "Score : <b>"+
-            score+" / "+total+
-            "</b><br><br>"+msg;
-
+        let msg=scoreAnglais===total ? "🔥 PARFAIT !" : scoreAnglais>=total*.8 ? "👏 Excellent !" : scoreAnglais>=total*.6 ? "👍 Bien joué !" : "💪 Continue à réviser !";
+        document.getElementById("finalScore").innerHTML="Score : <b>"+scoreAnglais+" / "+total+"</b><br><br>"+msg;
     }else{
-
         showQuestion();
-
     }
 }
 
-
 function backMenu(){
-
     document.getElementById("end").classList.add("hidden");
-    document.getElementById("quiz").classList.add("hidden");
+    document.getElementById("quiz-anglais").classList.add("hidden");
     document.getElementById("list").classList.add("hidden");
-
     document.getElementById("menu").classList.remove("hidden");
 }
 
-
 function restart(){
-
-    start(selectedGroup)
-
+    start(selectedGroup);
 }
 
-
-/* =========================
-   LISTE DES VERBES
-========================= */
-
 function showList(){
-
     document.getElementById("menu").classList.add("hidden");
-    document.getElementById("quiz").classList.add("hidden");
+    document.getElementById("quiz-anglais").classList.add("hidden");
     document.getElementById("end").classList.add("hidden");
     document.getElementById("list").classList.remove("hidden");
 
     let html="";
-
     for(let g=1;g<=5;g++){
-
-        html+=`
-        <h3 class="groupTitle">
-            📚 Groupe ${g}
-        </h3>
-
+        html+=`<h3 class="groupTitle">📚 Groupe ${g}</h3>
         <div class="table-container">
-
         <table>
-
         <thead>
-        <tr>
-            <th>Français</th>
-            <th>Infinitif</th>
-            <th>Prétérit</th>
-            <th>Participe passé</th>
-        </tr>
+        <tr><th>Français</th><th>Infinitif</th><th>Prétérit</th><th>Participe passé</th></tr>
         </thead>
-
-        <tbody>
-        `;
-
+        <tbody>`;
         groups[g].forEach(v=>{
-
-            html+=`
-            <tr>
-                <td>${v[0]}</td>
-                <td><b>${v[1]}</b></td>
-                <td>${v[2]}</td>
-                <td>${v[3]}</td>
-            </tr>
-            `;
-
+            html+=`<tr><td>${v[0]}</td><td><b>${v[1]}</b></td><td>${v[2]}</td><td>${v[3]}</td></tr>`;
         });
-
-        html+=`
-        </tbody>
-        </table>
-        </div>
-        `;
-
+        html+=`</tbody></table></div>`;
     }
-
     document.getElementById("verbTables").innerHTML=html;
 }
 
-
 function backMenuFromList(){
-
     document.getElementById("list").classList.add("hidden");
     document.getElementById("menu").classList.remove("hidden");
-
 }
-
 </script>
 
 </body>
 </html>
-```
