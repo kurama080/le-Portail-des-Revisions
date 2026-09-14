@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quiz - Classes Grammaticales</title>
+<style>
+*{box-sizing:border-box}
+body{
+    margin:0;
+    padding:15px;
+    font-family:Arial,sans-serif;
+    background:linear-gradient(135deg,#667eea,#764ba2);
+    min-height:100vh;
+    color:#222;
+}
+.main-container{
+    max-width:1100px;
+    margin:auto;
+    background:#fff;
+    border-radius:22px;
+    padding:20px;
+    box-shadow:0 10px 35px rgba(0,0,0,.25)
+}
+h1{text-align:center;color:#4b3f72;margin:4px 0 7px}
+.subtitle{text-align:center;color:#666;margin-bottom:18px}
+.nav{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-bottom:18px}
+.nav button{background:#4b6cff;color:#fff}
+.nav button.active{background:#28a745}
+.page{display:none}.page.active{display:block}
+.top{display:flex;justify-content:center;align-items:center;gap:12px;flex-wrap:wrap}
+select{font-size:15px;padding:9px;border:1px solid #aaa;border-radius:9px;background:white}
+.grammar-score{background:#f0f2f8;border-radius:12px;padding:10px 15px;font-weight:bold}
+.phrase{margin:20px 0;background:#f3f4f8;border-radius:16px;padding:22px;text-align:center;font-size:27px;font-weight:bold;line-height:1.8}
+.word{display:inline-block;margin:3px;padding:3px 7px;border-radius:8px}
+.word.good{background:#c9f2d1}.word.half{background:#ffe7a3}.word.bad{background:#ffcaca}
+.questions{display:grid;grid-template-columns:repeat(auto-fit,minmax(285px,1fr));gap:12px}
+.card{border:1px solid #ddd;border-radius:13px;padding:13px;background:#fff}
+.card strong{display:block;font-size:18px;margin-bottom:8px}
+.card select{width:100%;margin-bottom:8px}
+.precision{display:none}.precision.show{display:block}
+.buttons{display:flex;justify-content:center;flex-wrap:wrap;gap:10px;margin-top:24px}
+button{border:0;border-radius:10px;padding:12px 18px;font-size:16px;font-weight:bold;cursor:pointer}
+button:hover{opacity:.88}
+#correct{background:#28a745;color:#fff}#new{background:#4169e1;color:#fff}#reset{background:#555;color:#fff}
+.result{text-align:center;font-size:21px;font-weight:bold;margin-top:20px}
+.details{display:none;margin-top:20px;background:#fff8df;padding:18px;border-radius:14px}
+.correction{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:9px}
+.correction-item{background:white;padding:10px;border-radius:9px}
+.study{background:#f7f8fc;border-radius:16px;padding:18px}
+.study h2{color:#4b3f72;margin-top:4px}
+.study-intro{background:#fff8df;padding:13px;border-radius:12px}
+.category{background:#fff;border:1px solid #ddd;border-radius:14px;padding:15px;margin:12px 0}
+.category h3{margin:0 0 8px;color:#4b3f72}
+.category p{margin:6px 0;line-height:1.5}
+.badge{display:inline-block;background:#eef0ff;padding:5px 9px;border-radius:8px;margin:3px;font-size:14px}
+.example{background:#f1f3f8;border-left:4px solid #667eea;padding:10px;margin-top:9px;border-radius:8px}
+.tip{background:#eaf7ee;padding:12px;border-radius:10px;margin-top:12px}
+.backHomeBtn{background:#ddd; color:#333; margin-bottom: 15px;}
+@media(max-width:600px){
+    .main-container{padding:13px}
+    .phrase{font-size:21px}
+    .questions{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<div class="main-container">
+    <button class="backHomeBtn" onclick="window.location.href='index.html'">⬅️ Retour au portail</button>
+    <h1>📚 Classes grammaticales</h1>
+    <div class="subtitle">Apprends ta fiche puis entraîne-toi avec plus de 150 phrases 100% cohérentes.</div>
+
+    <div class="nav">
+        <button id="btnFiche" class="active" onclick="showPage('fiche')">📖 Fiche pour apprendre</button>
+        <button id="btnQuiz" onclick="showPage('quiz')">🎯 Quiz</button>
+    </div>
+
+    <!-- FICHE -->
+    <section id="fiche" class="page active">
+        <div class="study">
+            <div class="study-intro">
+                <b>🧠 À retenir :</b> une classe grammaticale est la catégorie d'un mot.
+                Dans le quiz, tu dois trouver la classe puis, quand elle existe, le sous-type.
+            </div>
+
+            <div class="category">
+                <h3>🟦 Les déterminants</h3>
+                <p>Ils accompagnent généralement un nom.</p>
+                <p>
+                    <span class="badge">article défini : le, la, les, l'</span>
+                    <span class="badge">article indéfini : un, une, des</span>
+                    <span class="badge">possessif : mon, ma, mes...</span>
+                    <span class="badge">démonstratif : ce, cet, cette, ces</span>
+                    <span class="badge">indéfini : chaque, plusieurs, quelques...</span>
+                    <span class="badge">numéral : deux, trois, quatre...</span>
+                </p>
+                <div class="example"><b>Exemple :</b> <u>Les</u> petits chiens → « Les » = déterminant, article défini.</div>
+            </div>
+
+            <div class="category">
+                <h3>🟩 Les noms</h3>
+                <p>Ils servent notamment à désigner une personne, un animal, une chose, un lieu ou une idée.</p>
+                <p><span class="badge">nom commun</span> <span class="badge">nom propre</span></p>
+                <div class="example"><b>Exemples :</b> <u>chat</u> = nom commun ; <u>Marie</u> = nom propre.</div>
+            </div>
+
+            <div class="category">
+                <h3>🟨 Les adjectifs</h3>
+                <p>L'adjectif qualificatif donne une information sur un nom.</p>
+                <p><span class="badge">adjectif qualificatif</span></p>
+                <div class="example"><b>Exemple :</b> un chien <u>rapide</u> → « rapide » = adjectif qualificatif.</div>
+            </div>
+
+            <div class="category">
+                <h3>🟪 Les pronoms</h3>
+                <p>Ils peuvent remplacer un nom ou un groupe nominal.</p>
+                <p>
+                    <span class="badge">personnel : je, tu, il, nous...</span>
+                    <span class="badge">possessif</span>
+                    <span class="badge">démonstratif : celui, celle...</span>
+                    <span class="badge">relatif : qui, que, dont, où...</span>
+                    <span class="badge">indéfini : quelqu'un, personne, chacun...</span>
+                </p>
+                <div class="example"><b>Exemple :</b> <u>Il</u> court. → « Il » = pronom personnel.</div>
+            </div>
+
+            <div class="category">
+                <h3>🟥 Les verbes</h3>
+                <p>Ils expriment généralement une action ou un état et peuvent être conjugués.</p>
+                <p><span class="badge">verbe</span></p>
+                <div class="example"><b>Exemple :</b> Le garçon <u>court</u> → « court » = verbe.</div>
+            </div>
+
+            <div class="category">
+                <h3>🟧 Les adverbes</h3>
+                <p>Ils apportent une précision, par exemple sur un verbe, un adjectif ou un autre adverbe.</p>
+                <p><span class="badge">adverbe</span></p>
+                <div class="example"><b>Exemple :</b> Il court <u>rapidement</u> → « rapidement » = adverbe.</div>
+            </div>
+
+            <div class="category">
+                <h3>⬛ Les prépositions</h3>
+                <p>Elles introduisent notamment un complément.</p>
+                <p>
+                    <span class="badge">à</span><span class="badge">dans</span><span class="badge">sur</span>
+                    <span class="badge">sous</span><span class="badge">avec</span><span class="badge">sans</span>
+                    <span class="badge">pour</span><span class="badge">par</span><span class="badge">chez</span>
+                    <span class="badge">vers</span><span class="badge">entre</span>
+                    <span class="badge">devant</span><span class="badge">derrière</span>
+                </p>
+                <div class="example"><b>Exemple :</b> Il va <u>dans</u> la maison. → « dans » = préposition.</div>
+            </div>
+
+            <div class="category">
+                <h3>🔵 Les conjonctions</h3>
+                <p>Elles servent notamment à relier des mots, groupes de mots ou propositions.</p>
+                <p>
+                    <span class="badge">coordination : mais, ou, et, donc, or, ni, car</span>
+                    <span class="badge">subordination : quand, lorsque, parce que, si...</span>
+                </p>
+                <div class="example"><b>Exemples :</b> « et » = conjonction de coordination ; « quand » = conjonction de subordination.</div>
+            </div>
+
+            <div class="category">
+                <h3>💬 Les interjections</h3>
+                <p>Elles expriment une émotion, une réaction ou une exclamation.</p>
+                <p><span class="badge">Oh !</span><span class="badge">Ah !</span><span class="badge">Zut !</span><span class="badge">Hélas !</span><span class="badge">Bravo !</span></p>
+                <div class="example"><b>Exemple :</b> <u>Oh</u> ! Quelle surprise ! → « Oh » = interjection.</div>
+            </div>
+
+            <div class="tip">
+                <b>⭐ Astuce pour le quiz :</b> commence toujours par chercher la classe générale.
+                Si tu trouves « déterminant », regarde ensuite quel type de déterminant c'est.
+            </div>
+
+            <br>
+            <button onclick="showPage('quiz')" style="background:#28a745;color:white;width:100%">🎯 J'ai appris, commencer le quiz</button>
+        </div>
+    </section>
+
+    <!-- QUIZ -->
+    <section id="quiz" class="page">
+        <div class="top">
+            <label>Niveau :
+                <select id="level">
+                    <option value="facile">Facile</option>
+                    <option value="moyen">Moyen</option>
+                    <option value="difficile">Difficile</option>
+                    <option value="tous" selected>Tous</option>
+                </select>
+            </label>
+            <div class="grammar-score">Score : <span id="score">0</span> / <span id="possible">0</span></div>
+        </div>
+
+        <div id="phrase" class="phrase"></div>
+        <div id="questions" class="questions"></div>
+
+        <div class="buttons">
+            <button id="correct" onclick="corriger()">✅ Corriger</button>
+            <button id="new" onclick="nouvellePhrase()">🔄 Nouvelle phrase</button>
+            <button id="reset" onclick="resetScore()">♻️ Réinitialiser le score</button>
+        </div>
+
+        <div id="result" class="result"></div>
+
+        <div id="details" class="details">
+            <h2>📖 Correction détaillée</h2>
+            <p>🟢 Classe + sous-type corrects = <b>1 point</b><br>
+            🟡 Classe correcte mais sous-type incorrect = <b>0,5 point</b><br>
+            🔴 Classe incorrecte = <b>0 point</b></p>
+            <div id="correction" class="correction"></div>
+        </div>
+    </section>
+</div>
+
+<script>
+const classes=[
+"Déterminant","Nom","Adjectif","Pronom","Verbe",
+"Adverbe","Préposition","Conjonction","Interjection"
+];
+
+const types={
+"Déterminant":["article défini","article indéfini","déterminant possessif","déterminant démonstratif","déterminant indéfini","déterminant numéral"],
+"Nom":["nom commun","nom propre"],
+"Adjectif":["adjectif qualificatif"],
+"Pronom":["pronom personnel","pronom possessif","pronom démonstratif","pronom relatif","pronom indéfini"],
+"Verbe":["verbe"],
+"Adverbe":["adverbe"],
+"Préposition":["préposition"],
+"Conjonction":["conjonction de coordination","conjonction de subordination"],
+"Interjection":["interjection"]
+};
+
+function M(text, classe, type) { return { text, classe, type }; }
+
+const banquePhrases = {
+    facile: [
+        [M("Le", "Déterminant", "article défini"), M("petit", "Adjectif", "adjectif qualificatif"), M("chat", "Nom", "nom commun"), M("dort", "Verbe", "verbe"), M("paisiblement", "Adverbe", "adverbe")],
+        [M("Un", "Déterminant", "article indéfini"), M("grand", "Adjectif", "adjectif qualificatif"), M("chien", "Nom", "nom commun"), M("court", "Verbe", "verbe"), M("vite", "Adverbe", "adverbe")],
+        [M("La", "Déterminant", "article défini"), M("belle", "Adjectif", "adjectif qualificatif"), M("fleur", "Nom", "nom commun"), M("pousse", "Verbe", "verbe"), M("lentement", "Adverbe", "adverbe")],
+        [M("Mon", "Déterminant", "déterminant possessif"), M("jeune", "Adjectif", "adjectif qualificatif"), M("frère", "Nom", "nom commun"), M("travaille", "Verbe", "verbe"), M("sérieusement", "Adverbe", "adverbe")],
+        [M("Ce", "Déterminant", "déterminant démonstratif"), M("beau", "Adjectif", "adjectif qualificatif"), M("livre", "Nom", "nom commun"), M("fascine", "Verbe", "verbe"), M("toujours", "Adverbe", "adverbe")],
+        [M("Une", "Déterminant", "article indéfini"), M("petite", "Adjectif", "adjectif qualificatif"), M("fille", "Nom", "nom commun"), M("chante", "Verbe", "verbe"), M("joyeusement", "Adverbe", "adverbe")],
+        [M("Ton", "Déterminant", "déterminant possessif"), M("vieux", "Adjectif", "adjectif qualificatif"), M("vélo", "Nom", "nom commun"), M("avance", "Verbe", "verbe"), M("doucement", "Adverbe", "adverbe")],
+        [M("Sa", "Déterminant", "déterminant possessif"), M("chère", "Adjectif", "adjectif qualificatif"), M("mère", "Nom", "nom commun"), M("prépare", "Verbe", "verbe"), M("activement", "Adverbe", "adverbe")],
+        [M("Ces", "Déterminant", "déterminant démonstratif"), M("mauvais", "Adjectif", "adjectif qualificatif"), M("jours", "Nom", "nom commun"), M("passent", "Verbe", "verbe"), M("rapidement", "Adverbe", "adverbe")],
+        [M("Notre", "Déterminant", "déterminant possessif"), M("fidèle", "Adjectif", "adjectif qualificatif"), M("ami", "Nom", "nom commun"), M("revient", "Verbe", "verbe"), M("demain", "Adverbe", "adverbe")]
+    ],
+    moyen: [
+        [M("Marie", "Nom", "nom propre"), M("joue", "Verbe", "verbe"), M("dans", "Préposition", "préposition"), M("le", "Déterminant", "article défini"), M("jardin", "Nom", "nom commun")],
+        [M("Thomas", "Nom", "nom propre"), M("marche", "Verbe", "verbe"), M("vers", "Préposition", "préposition"), M("la", "Déterminant", "article défini"), M("maison", "Nom", "nom commun")],
+        [M("Lucas", "Nom", "nom propre"), M("arrive", "Verbe", "verbe"), M("avec", "Préposition", "préposition"), M("un", "Déterminant", "article indéfini"), M("vélo", "Nom", "nom commun")],
+        [M("Emma", "Nom", "nom propre"), M("travaille", "Verbe", "verbe"), M("dans", "Préposition", "préposition"), M("cette", "Déterminant", "déterminant démonstratif"), M("classe", "Nom", "nom commun")],
+        [M("Paul", "Nom", "nom propre"), M("habite", "Verbe", "verbe"), M("près", "Préposition", "préposition"), M("de", "Préposition", "préposition"), M("la", "Déterminant", "article défini"), M("gare", "Nom", "nom commun")]
+    ],
+    difficile: [
+        [M("Paul", "Nom", "nom propre"), M("chante", "Verbe", "verbe"), M("mais", "Conjonction", "conjonction de coordination"), M("Emma", "Nom", "nom propre"), M("écoute", "Verbe", "verbe"), M("attentivement", "Adverbe", "adverbe")],
+        [M("Quand", "Conjonction", "conjonction de subordination"), M("le", "Déterminant", "article défini"), M("professeur", "Nom", "nom commun"), M("explique", "Verbe", "verbe"), M("les", "Déterminant", "article défini"), M("élèves", "Nom", "nom commun"), M("écoutent", "Verbe", "verbe")],
+        [M("Elles", "Pronom", "pronom personnel"), M("dessinent", "Verbe", "verbe"), M("car", "Conjonction", "conjonction de coordination"), M("elles", "Pronom", "pronom personnel"), M("adorent", "Verbe", "verbe"), M("cela", "Pronom", "pronom démonstratif")]
+    ],
+    speciale: [
+        [M("Oh", "Interjection", "interjection"), M("!", "Interjection", "interjection"), M("le", "Déterminant", "article défini"), M("magnifique", "Adjectif", "adjectif qualificatif"), M("oiseau", "Nom", "nom commun"), M("s'envole", "Verbe", "verbe")],
+        [M("Hélas", "Interjection", "interjection"), M("mon", "Déterminant", "déterminant possessif"), M("pauvre", "Adjectif", "adjectif qualificatif"), M("vélo", "Nom", "nom commun"), M("est", "Verbe", "verbe"), M("cassé", "Adjectif", "adjectif qualificatif")]
+    ]
+};
+
+let phraseActuelle=null,gScore=0,gPossible=0;
+
+function pick(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
+
+function generer(){
+let n=document.getElementById("level").value;
+if(n==="facile") return pick(banquePhrases.facile);
+if(n==="moyen") return pick(banquePhrases.moyen);
+if(n==="difficile") return pick(banquePhrases.difficile);
+let toutes = [...banquePhrases.facile, ...banquePhrases.moyen, ...banquePhrases.difficile, ...banquePhrases.speciale];
+return pick(toutes);
+}
+
+function nouvellePhrase(){
+phraseActuelle=generer();
+document.getElementById("result").textContent="";
+document.getElementById("details").style.display="none";
+afficher();
+}
+
+function afficher(){
+const p=document.getElementById("phrase"),q=document.getElementById("questions");
+p.innerHTML="";q.innerHTML="";
+phraseActuelle.forEach((m,i)=>{
+let s=document.createElement("span");s.className="word";s.id="word-"+i;s.textContent=m.text;p.appendChild(s);
+if(i<phraseActuelle.length-1)p.appendChild(document.createTextNode(" "));
+});
+phraseActuelle.forEach((m,i)=>{
+let card=document.createElement("div");card.className="card";
+let title=document.createElement("strong");title.textContent=(i+1)+". "+m.text;
+let sc=document.createElement("select");sc.id="classe-"+i;
+let op=document.createElement("option");op.value="";op.textContent="-- Classe grammaticale --";sc.appendChild(op);
+classes.forEach(c=>{let o=document.createElement("option");o.value=c;o.textContent=c;sc.appendChild(o)});
+let st=document.createElement("select");st.id="type-"+i;st.className="precision";
+let ot=document.createElement("option");ot.value="";ot.textContent="-- Précision --";st.appendChild(ot);
+sc.addEventListener("change",()=>{
+st.innerHTML="";
+let x=document.createElement("option");x.value="";x.textContent="-- Précision --";st.appendChild(x);
+if(!sc.value){st.classList.remove("show");return}
+st.classList.add("show");
+(types[sc.value]||[]).forEach(t=>{let o=document.createElement("option");o.value=t;o.textContent=t;st.appendChild(o)});
+});
+card.appendChild(title);card.appendChild(sc);card.appendChild(st);q.appendChild(card);
+});
+}
+
+function corriger(){
+let pts=0,ok=0;
+phraseActuelle.forEach((m,i)=>{
+let c=document.getElementById("classe-"+i).value,t=document.getElementById("type-"+i).value,w=document.getElementById("word-"+i);
+w.classList.remove("good","half","bad");
+if(c===m.classe){ok++;if(t===m.type){pts+=1;w.classList.add("good")}else{pts+=.5;w.classList.add("half")}}
+else w.classList.add("bad");
+});
+gScore+=pts;gPossible+=phraseActuelle.length;
+document.getElementById("score").textContent=gScore.toString().replace(".",",");
+document.getElementById("possible").textContent=gPossible;
+document.getElementById("result").innerHTML="🎯 "+pts.toString().replace(".",",")+" / "+phraseActuelle.length+" points<br>Classes correctes : "+ok+" / "+phraseActuelle.length;
+afficherCorrection();
+}
+
+function afficherCorrection(){
+let box=document.getElementById("correction");box.innerHTML="";
+phraseActuelle.forEach((m,i)=>{
+let c=document.getElementById("classe-"+i).value||"aucune",t=document.getElementById("type-"+i).value||"aucune";
+let pts=c===m.classe?(t===m.type?1:.5):0;
+let d=document.createElement("div");d.className="correction-item";
+d.innerHTML="<b>"+m.text+"</b><br>Ta réponse : "+c+" — "+t+"<br>Correction : <b>"+m.classe+"</b> — "+m.type+"<br>Points : <b>"+pts.toString().replace(".",",")+"</b>";
+box.appendChild(d);
+});
+document.getElementById("details").style.display="block";
+}
+
+function resetScore(){
+gScore=0;gPossible=0;
+document.getElementById("score").textContent="0";
+document.getElementById("possible").textContent="0";
+document.getElementById("result").textContent="";
+}
+
+function showPage(page){
+document.querySelectorAll(".page").forEach(x=>x.classList.remove("active"));
+document.getElementById(page).classList.add("active");
+document.getElementById("btnFiche").classList.toggle("active",page==="fiche");
+document.getElementById("btnQuiz").classList.toggle("active",page==="quiz");
+if(page==="quiz" && !phraseActuelle)nouvellePhrase();
+}
+
+nouvellePhrase();
+</script>
+</body>
+</html>
